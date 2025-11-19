@@ -23,7 +23,7 @@ public class ParrotGUIListener implements Listener {
             return;
         }
 
-        gui.items().click(player, event.getRawSlot());
+        gui.items().click(player, event.getRawSlot(), gui.settings());
     }
 
     @EventHandler

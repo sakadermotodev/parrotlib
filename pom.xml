@@ -7,7 +7,7 @@
 
     <groupId>io.sakamotodev.libraries</groupId>
     <artifactId>parrotlib</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <packaging>jar</packaging>
 
@@ -17,18 +17,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- Paper Repository -->
+    <!-- Repositories -->
     <repositories>
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/sakadermotodev/parrotlib</url>
         </repository>
     </repositories>
 
+    <!-- Dependencies -->
     <dependencies>
 
         <!-- Paper API -->
@@ -39,14 +40,14 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- HikariCP (wird geschattiert und relocated!) -->
+        <!-- HikariCP (NORMAL in Library, NICHT shaded!) -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>5.1.0</version>
         </dependency>
 
-        <!-- SQLite JDBC (für lokalen SQLite Support) -->
+        <!-- Optional: SQLite Support -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
@@ -55,47 +56,23 @@
 
     </dependencies>
 
-    <!-- Shade Plugin: Hikari + SQLite relocaten, Konflikte vermeiden -->
+    <!-- Deployment to GitHub Packages -->
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/sakadermotodev/parrotlib</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
 
+            <!-- Maven Deploy Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
-
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-
-                        <configuration>
-
-                            <!-- Dieses minimiert die Jar-Größe -->
-                            <minimizeJar>true</minimizeJar>
-
-                            <relocations>
-
-                                <!-- Verhindert Konflikte mit anderen Plugins -->
-                                <relocation>
-                                    <pattern>com.zaxxer.hikari</pattern>
-                                    <shadedPattern>io.sakamotodev.parrotlib.hikari</shadedPattern>
-                                </relocation>
-
-                                <!-- SQLite ebenfalls absichern -->
-                                <relocation>
-                                    <pattern>org.sqlite</pattern>
-                                    <shadedPattern>io.sakamotodev.parrotlib.sqlite</shadedPattern>
-                                </relocation>
-
-                            </relocations>
-                        </configuration>
-
-                    </execution>
-                </executions>
-
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.1</version>
             </plugin>
 
         </plugins>
