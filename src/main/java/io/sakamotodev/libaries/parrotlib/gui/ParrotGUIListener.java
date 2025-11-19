@@ -17,8 +17,6 @@ public class ParrotGUIListener implements Listener {
         if (gui == null) return;
 
         event.setCancelled(true);
-
-        // Shift-Click blockieren?
         if (event.isShiftClick() && gui.settings().shiftClickDisabled()) {
             return;
         }

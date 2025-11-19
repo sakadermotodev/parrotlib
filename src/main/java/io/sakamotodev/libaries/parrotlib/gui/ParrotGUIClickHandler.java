@@ -35,7 +35,6 @@ public class ParrotGUIClickHandler {
 
         long now = System.currentTimeMillis();
 
-        // GLOBAL CLICK COOLDOWN
         long globalCd = settings.clickCooldown();
         if (globalCd > 0) {
             long last = lastClick.getOrDefault(player, 0L);
@@ -45,7 +44,6 @@ public class ParrotGUIClickHandler {
             lastClick.put(player, now);
         }
 
-        // SLOT COOLDOWN
         long slotCd = settings.slotCooldown(slot);
         if (slotCd > 0) {
             lastSlotClick.putIfAbsent(player, new HashMap<>());
@@ -57,7 +55,6 @@ public class ParrotGUIClickHandler {
             lastSlotClick.get(player).put(slot, now);
         }
 
-        // Execute handler
         if (handlers.containsKey(slot)) {
             handlers.get(slot).onClick(player, slot);
         }

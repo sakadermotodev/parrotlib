@@ -53,10 +53,6 @@ public class ParrotItem {
         );
     }
 
-    /* -----------------------------
-       PDC SUPPORT
-    ----------------------------- */
-
     public ParrotItem pdcString(NamespacedKey key, String value) {
         ParrotItemPDC.setString(item, key, value);
         return this;
@@ -72,10 +68,6 @@ public class ParrotItem {
         return this;
     }
 
-    /* -----------------------------
-       SKULL SUPPORT
-    ----------------------------- */
-
     public ParrotItem skullPlayer(String name) {
         ParrotItemSkull.applyPlayerName(item, name);
         return this;
@@ -85,10 +77,6 @@ public class ParrotItem {
         ParrotItemSkull.applyBase64(item, base64);
         return this;
     }
-
-    /* -----------------------------
-       VISUAL (Glow / Durability / Unbreakable)
-    ----------------------------- */
 
     public ParrotItem durability(int dmg) {
         ParrotItemVisual.setDurability(item, dmg);
@@ -104,10 +92,6 @@ public class ParrotItem {
         ParrotItemVisual.glow(item);
         return this;
     }
-
-    /* -----------------------------
-       FINISH
-    ----------------------------- */
 
     public ItemStack build() {
         return item;

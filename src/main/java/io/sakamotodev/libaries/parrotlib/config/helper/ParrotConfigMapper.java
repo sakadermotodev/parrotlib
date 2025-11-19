@@ -27,25 +27,20 @@ public class ParrotConfigMapper {
                 ConfigValue cv = field.getAnnotation(ConfigValue.class);
                 String path = cv.value();
 
-                // ensure accessible
                 field.setAccessible(true);
 
-                // default value in code:
                 Object defaultValue = field.get(instance);
 
-                // if missing in config → write default
                 if (!config.contains(path)) {
                     config.set(path, defaultValue);
                 }
 
-                // load real value from YAML
                 Object value = config.get(path);
 
-                // assign value into field
                 field.set(instance, value);
             }
 
-            configFile.save(); // write missing defaults
+            configFile.save();
 
             return instance;
 
